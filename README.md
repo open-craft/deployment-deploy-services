@@ -7,8 +7,11 @@ Create a OpenStack environment
 ------------------------------
 
 1. Create a root volume that has 40GB size. It should be based on Ubuntu 14.04 image. 
-   We suggest you use vanilla image from [ubuntu page](https://cloud-images.ubuntu.com/). 
-   To do that go to (`Volumes` -> `Create Volume` -> `Volume Source` choose `Image` -> `Select image`). 
+   We suggest you use vanilla image from [ubuntu page](https://cloud-images.ubuntu.com/).
+   First you need to upload images to your project, to to this follow 
+   [documentation here](https://github.com/open-craft/doc/blob/master/howto-upload-images-to-openstack.md). 
+   When images are uploaded you'll need to: `Volumes` -> `Create Volume` -> `Volume Source` choose `Image` -> `Select image`. 
+   
 2. Create `vps-ssd-3` instance from this volume: (`Boot Source` -> `Volume` -> `Your root volume`). 
 3. Go to info page and note the instance public key, ssh to the instance and check whether public key matches, 
    save public key to your ssh config.
@@ -37,9 +40,12 @@ Generate secrets
     2. Generate key for dalite logrotate backup   
 2. Generate tarsnap read write keys from the master key, see [tarsnap-keymngmt](http://www.tarsnap.com/man-tarsnap-keymgmt.1.html),    
 3. Go to dead man's snitch at https://deadmanssnitch.com/. And generate three snitches, save them under:
-    1. `DALITE_LOG_TARSNAP_SNITCH` --- this will monitor saving logs 
-    2. `SANITY_CHECK_SNITCH`  --- this will monitor sanity check saving 
+    1. `DALITE_LOG_TARSNAP_SNITCH` --- this will monitor saving logs, 
+       this snich should have daily interval
+    2. `SANITY_CHECK_SNITCH`  --- this will monitor sanity check, 
+       this snitch should have 15 minute interval        
     3. `BACKUP_SWIFT_SNITCH`  --- this will monitor backup of swift container
+       this snitch should have hourly interval 
 4. Generate various dailte secrets; 
    1. `DALITE_SECRET_KEY` --- a random string 
    2. `DALITE_LTI_CLIENT_SECRET` --- a random string
