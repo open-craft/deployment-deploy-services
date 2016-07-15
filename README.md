@@ -13,12 +13,15 @@ Create a OpenStack environment
    When images are uploaded you'll need to: `Volumes` -> `Create Volume` -> `Volume Source` choose `Image` -> `Select image`. 
    
 2. Create `vps-ssd-3` instance from this volume: (`Boot Source` -> `Volume` -> `Your root volume`). 
-3. Go to info page and note the instance public key, ssh to the instance and check whether public key matches, 
-   save public key to your ssh config.
-4. Create a `hosts` file containing: 
+
+3. Create an additional blank volume for storing log and database dumps; we recommend 100GB. Attach it to the instance you created, and make a note of the device identifier it gets assigned (for example, `/dev/vdb` or `/dev/vdc`).
+
+4. Go to info page and note the instance public key, ssh to the instance and check whether public key matches, save public key to your ssh config.
+
+5. Create a `hosts` file containing (for example): 
 
         [dalite]
-        dalite.harvardx.harvard.edu ansible_host=149.202.190.106
+        dalite.harvardx.harvard.edu ansible_host=xxx.xxx.xxx.xxx
                 
    Please note that while host name is largely irrelevant, this host must be in dalite group.   
 
@@ -103,7 +106,10 @@ Last but not least encrypt the `private-extra-vars.yaml`:
 Perform deployment
 ------------------
 
-       ansible-galaxy install -r requirements.yml -f && ansible-playbook deploy-all.yml -u ubuntu --extra-vars private-extra-vars.yml
+If the device identifier your external log volume was assigned is not /dev/vdc (the default we look for), then you'll need to pass it into the command.
+
+    ansible-galaxy install -r requirements.yml -f
+    ansible-playbook deploy-all.yml -u ubuntu --extra-vars private-extra-vars.yml --extra-vars "DALITE_LOG_DOWNLOAD_VOLUME_DEVICE_ID=/dev/vdb"
     
     
    
