@@ -8,17 +8,19 @@ Create a OpenStack environment
 
 1. Create a root volume that has 40GB size. It should be based on Ubuntu 14.04 image. 
    We suggest you use vanilla image from [ubuntu page](https://cloud-images.ubuntu.com/).
-   First you need to upload images to your project, to to this follow 
+   First you need to upload images to your project, to do this follow 
    [documentation here](https://github.com/open-craft/doc/blob/master/howto-upload-images-to-openstack.md). 
-   When images are uploaded you'll need to: `Volumes` -> `Create Volume` -> `Volume Source` choose `Image` -> `Select image`. 
+   When images are uploaded you'll need to: `Volumes` -> `Create Volume` -> `Volume Source` choose `Image` -> `Select image`.
    
 2. Create `vps-ssd-3` instance from this volume: (`Boot Source` -> `Volume` -> `Your root volume`). 
 
 3. Create an additional blank volume for storing log and database dumps; we recommend 100GB. Attach it to the instance you created, and make a note of the device identifier it gets assigned (for example, `/dev/vdb` or `/dev/vdc`).
 
-4. Go to info page and note the instance public key, ssh to the instance and check whether public key matches, save public key to your ssh config.
+4. Make a note of the instance's SSH private key; either save it to your SSH config for that host's IP address, or save it in an id_rsa file with permissions set to 600.
 
-5. Create a `hosts` file containing (for example): 
+5. SSH to the new instance using its private key; verify the public key fingerprint against the OpenStack log page before proceeding.
+
+6. Create an Ansible `hosts` file containing (for example): 
 
         [dalite]
         dalite.harvardx.harvard.edu ansible_host=xxx.xxx.xxx.xxx
@@ -33,6 +35,7 @@ Obtain database credentials
 3. Save host to `MYSQL_DALITE_HOST`
 4. Save database to: `MYSQL_DALITE_DATABASE`
 5. Save credentials to: `MYSQL_DALITE_PASSWORD`, `MYSQL_DALITE_USER`
+6. Save the device ID of the blank volume you attached for log and database dumps to `DALITE_LOG_DOWNLOAD_VOLUME_DEVICE_ID`.
 
    
 Generate secrets
@@ -109,7 +112,9 @@ Perform deployment
 If the device identifier your external log volume was assigned is not /dev/vdc (the default we look for), then you'll need to pass it into the command.
 
     ansible-galaxy install -r requirements.yml -f
-    ansible-playbook deploy-all.yml -u ubuntu --extra-vars private-extra-vars.yml --extra-vars "DALITE_LOG_DOWNLOAD_VOLUME_DEVICE_ID=/dev/vdb"
+    ansible-playbook deploy-all.yml -u ubuntu --extra-vars private-extra-vars.yml
+
+If you saved the instance's private SSH key to a separate file, rather than into your SSH configuration, you'll need to pass the `--private-key` argument to `ansible-playbook`, specifying the file where the private key can be found.
     
     
    
