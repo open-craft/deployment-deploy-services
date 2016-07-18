@@ -43,4 +43,4 @@
 
 - name: dalite
   src: https://github.com/open-craft/ansible-dalite
-  version: 'd89aa12a37d394369a2d2790f04fd6d98acfd746'
+  version: '1a3e31c26809893ccc8f9a4100b9c09ae19d6cc3'
