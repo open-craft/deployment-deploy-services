@@ -44,3 +44,7 @@
 - name: dalite
   src: https://github.com/open-craft/ansible-dalite
   version: '1a3e31c26809893ccc8f9a4100b9c09ae19d6cc3'
+
+- name: load-balancer
+  src: https://github.com/open-craft/ansible-load-balancer
+  version: origin/smarnach/initial
