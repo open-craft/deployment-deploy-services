@@ -1,3 +1,10 @@
+- name: Install Python 2
+  hosts: load-balancer
+  become: true
+  gather_facts: false
+  tasks:
+    - raw: "[ -e /usr/bin/pyton ] || sudo apt-get update -qq && sudo apt-get install -qq python"
+
 - name: Set up Dalite servers
   hosts: dalite
   become: true
@@ -6,3 +13,11 @@
     - forward-server-mail
     - dalite
     - backup-swift-container
+
+- name: Set up load-balancing servers
+  hosts: load-balancer
+  become: true
+  roles:
+    - common-server
+    - forward-server-mail
+    - load-balancer

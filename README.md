@@ -1,10 +1,15 @@
-# How to deploy dalite-ng on OpenStack server
- 
-This repository contains ansible deployment scripts allowing one to deploy dalite-ng to OpenStack server.
+Ansible playbook for various OpenCraft services
+===============================================
 
+This repository contains an OpenCraft playbook to deploy the following services:
 
-Create a OpenStack environment
-------------------------------
+* Dalite NG servers
+* Load balancing servers for the OpenCraft instance manager
+
+How to deploy a Dalite NG server
+--------------------------------
+
+### Create an OpenStack environment
 
 1. Create a root volume that has 40GB size. It should be based on Ubuntu 14.04 image. 
    We suggest you use vanilla image from [ubuntu page](https://cloud-images.ubuntu.com/).
@@ -27,8 +32,7 @@ Create a OpenStack environment
                 
    Please note that while host name is largely irrelevant, this host must be in dalite group.   
 
-Obtain database credentials
----------------------------
+### Obtain database credentials
 
 1. Create a `private-extra-vars.yml` file and store it somewhere safe, all configuration should be stored in that file. 
 2. Obtain database credentials 
@@ -38,8 +42,7 @@ Obtain database credentials
 6. Save the device ID of the blank volume you attached for log and database dumps to `DALITE_LOG_DOWNLOAD_VOLUME_DEVICE_ID`.
 
    
-Generate secrets
-----------------
+### Generate secrets
 
 1. Generate tarsnap keys, these keys shouldn't end up on dalite-ng server, but instead store them somewhere safe. 
     1. Generate key for swift container backup 
@@ -106,15 +109,51 @@ Last but not least encrypt the `private-extra-vars.yaml`:
    `ansible-vault encrypt host_vars/mysql.opencraft.com/private.yml --vault-password-file .vault-pass`      
 
 
-Perform deployment
-------------------
+### Perform deployment
 
 If the device identifier your external log volume was assigned is not /dev/vdc (the default we look for), then you'll need to pass it into the command.
 
     ansible-galaxy install -r requirements.yml -f
-    ansible-playbook deploy-all.yml -u ubuntu --extra-vars private-extra-vars.yml
+    ansible-playbook deploy-all.yml -u ubuntu --extra-vars @private-extra-vars.yml --limit dalite
 
 If you saved the instance's private SSH key to a separate file, rather than into your SSH configuration, you'll need to pass the `--private-key` argument to `ansible-playbook`, specifying the file where the private key can be found.
-    
-    
-   
+
+How to deploy a load-balancing server
+-------------------------------------
+
+### Create an OpenStack instance
+
+1. Create an OpenStack "vps-ssd-1" instance from a vanilla Ubuntu 16.04 (xenial)
+   image.
+
+2. Add the IP address and host name of the new instance to the Ansible inventory
+   in the file `hosts` (create it if necessary):
+
+        [load-balancer]
+        load-balancer.host.name ansible_host=xx.xx.xx.xx
+
+### Generate secrets for the new server
+
+1. Go to https://deadmanssnitch.com/ and create two snitches, one for the
+   backups and one for the sanity checks.  Add them to a file
+   `host_vars/<hostname>/vars.yml`:
+
+        TARSNAP_BACKUP_SNITCH: https://nosnch.in/<backup-snitch>
+        SANITY_CHECK_SNITCH: https://nosnch.in/<sanity-check-snitch>
+
+2. Generate a tarsnap master key and a subkey with only read and write
+   permissions, and add it to the variables file:
+
+        TARSNAP_KEY: |
+          # START OF TARSNAP KEY FILE
+          [...]
+          # END OF TARSNAP KEY FILE
+
+### Perform the deployment
+
+Run these commands:
+
+    mkvirtualenv ansible
+    pip install -r requirements.txt
+    ansible-galaxy install -r requirements.yml -f
+    ansible-playbook deploy-all.yml -u ubuntu -l load-balancer
