@@ -31,7 +31,7 @@
 
 - name: sanity-checker
   src: https://github.com/open-craft/ansible-sanity-checker/
-  version: '5387389cbb640e125595fd57e5ab787504a9537c'
+  version: 'da537388ad02391a4f3b5075c7e09f553ecaa6eb'
 
 - name: forward-server-mail
   src: https://github.com/open-craft/ansible-forward-server-mail
