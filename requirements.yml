@@ -19,7 +19,7 @@
 
 - name: backup-to-tarsnap
   src: https://github.com/open-craft/ansible-backup-to-tarsnap
-  version: '3d2f6f982ab02112ede9e39e1553b106e5079b87'
+  version: 45ac5b4bfd9fe4003c126c3284bb0a91ac48b86a
 
 - name: common-server
   src: https://github.com/open-craft/ansible-common-server
