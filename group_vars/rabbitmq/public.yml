@@ -1,0 +1,9 @@
+SANITY_CHECK_LIVE_PORTS:
+  - host: localhost
+    port: 5671
+    message: "RabbitMQ does not respond on port 5671."
+  - host: localhost
+    port: 15671
+    message: "RabbitMQ management does not respond on port 15671."
+
+TARSNAP_BACKUP_FOLDERS: /etc/rabbitmq /var/lib/rabbitmq /etc/letsencrypt
