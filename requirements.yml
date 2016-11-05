@@ -47,4 +47,4 @@
 
 - name: load-balancer
   src: https://github.com/open-craft/ansible-load-balancer
-  version: f1bf941f2dbe20262b4bce44f636c7f57ab4a7c2
+  version: 4bbeb21d2ad9bedbf5ba54ffcbc26fd05f449b1f
