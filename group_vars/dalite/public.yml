@@ -1,6 +1,6 @@
 DALITE_SERVER_DOMAIN: '{{ inventory_hostname }}'
 
-DALITE_REPOSITORY_VERSION: "jbzdak/dalite-harvardx-ansible"
+DALITE_REPOSITORY_VERSION: "master"
 
 DALITE_USER_NAME: "dalite"
 DALITE_USER_HOME: "/home/{{ DALITE_USER_NAME }}"
