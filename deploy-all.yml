@@ -1,5 +1,5 @@
 - name: Install Python 2
-  hosts: load-balancer
+  hosts: load-balancer:rabbitmq
   become: true
   gather_facts: false
   tasks:
@@ -32,3 +32,11 @@
     - common-server
     - forward-server-mail
     - load-balancer
+
+- name: Set up rabbitmq servers
+  hosts: rabbitmq
+  become: true
+  roles:
+    - common-server
+    - forward-server-mail
+    - rabbitmq

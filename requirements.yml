@@ -48,3 +48,7 @@
 - name: load-balancer
   src: https://github.com/open-craft/ansible-load-balancer
   version: 4bbeb21d2ad9bedbf5ba54ffcbc26fd05f449b1f
+
+- name: rabbitmq
+  src: https://github.com/open-craft/ansible-rabbitmq
+  version: 1f249e94fb8d4b8166496a5e5bc11c2f213cfae4
