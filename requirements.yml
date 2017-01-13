@@ -52,3 +52,7 @@
 - name: rabbitmq
   src: https://github.com/open-craft/ansible-rabbitmq
   version: 1f249e94fb8d4b8166496a5e5bc11c2f213cfae4
+
+- name: elasticsearch
+  src: https://github.com/open-craft/ansible-role-elasticsearch
+  version: e2ab73d838bba7dd970aab21d89a34089c61cd2a
