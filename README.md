@@ -5,6 +5,7 @@ This repository contains an OpenCraft playbook to deploy the following services:
 
 * Dalite NG servers
 * Load balancing servers for the OpenCraft instance manager
+* ElasticSearch servers for OpenCraft instances
 
 How to deploy a Dalite NG server
 --------------------------------
@@ -157,3 +158,34 @@ Run these commands:
     pip install -r requirements.txt
     ansible-galaxy install -r requirements.yml -f
     ansible-playbook deploy-all.yml -u ubuntu -l load-balancer
+
+
+How to deploy an ElasticSearch server
+-------------------------------------
+
+### Create an OpenStack instance
+
+1. Create an OpenStack "vps-ssd-2" instance from a vanilla Ubuntu 16.04 (xenial)
+   image.
+
+2. Add the IP address and host name of the new instance to the Ansible inventory
+   in the file `hosts` (create it if necessary):
+
+        [elastic-search]
+        elasticsearch.host.name ansible_host=xx.xx.xx.xx
+
+### Generate secrets for the new server
+
+1. Go to https://deadmanssnitch.com/ and create one snitch for the sanity checks.
+   Add it to a file `host_vars/<hostname>/vars.yml`:
+
+        SANITY_CHECK_SNITCH: https://nosnch.in/<sanity-check-snitch>
+
+### Perform the deployment
+
+Run these commands:
+
+    mkvirtualenv ansible
+    pip install -r requirements.txt
+    ansible-galaxy install -r requirements.yml -f
+    ansible-playbook deploy-all.yml -u ubuntu -l elasticsearch

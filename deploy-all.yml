@@ -1,9 +1,9 @@
 - name: Install Python 2
-  hosts: load-balancer:rabbitmq
+  hosts: load-balancer:rabbitmq:elasticsearch
   become: true
   gather_facts: false
   tasks:
-    - raw: "[ -e /usr/bin/pyton ] || sudo apt-get update -qq && sudo apt-get install -qq python"
+    - raw: "[ -e /usr/bin/python ] || sudo apt-get update -qq && sudo apt-get install -qq python"
 
 - name: Set up Dalite servers
   hosts: dalite
@@ -40,3 +40,11 @@
     - common-server
     - forward-server-mail
     - rabbitmq
+
+- name: Set up elasticsearch servers
+  hosts: elasticsearch
+  become: true
+  roles:
+    - common-server
+    - forward-server-mail
+    - elasticsearch
