@@ -15,44 +15,44 @@
 
 - src: https://github.com/open-craft/ansible-tarsnap
   name: pmbauer.tarsnap
-  version: d96b1e69ae6b930e0841d7b025a3070c408a23
+  version: 'origin/jbzdak/conditionally-enable-tarsnapper'
 
 - name: backup-to-tarsnap
   src: https://github.com/open-craft/ansible-backup-to-tarsnap
-  version: 45ac5b4bfd9fe4003c126c3284bb0a91ac48b86a
+  version: origin/master
 
 - name: common-server
   src: https://github.com/open-craft/ansible-common-server
-  version: '8423f76a12f5ade7bd008efffedfee12f9506259'
+  version: origin/master
 
 - name: configure-apt
   src: https://github.com/open-craft/ansible-configure-apt
-  version: '97877cadc7927dab043bff70a1e621af3b277b5f'
+  version: origin/master
 
 - name: sanity-checker
   src: https://github.com/open-craft/ansible-sanity-checker/
-  version: 'da537388ad02391a4f3b5075c7e09f553ecaa6eb'
+  version: origin/master
 
 - name: forward-server-mail
   src: https://github.com/open-craft/ansible-forward-server-mail
-  version: 'c252ef531802fecace6c0173e647e0a0f13df256'
+  version: origin/master
 
 - name: backup-swift-container
   src: https://github.com/open-craft/ansible-backup-swift-container
-  version: c35578ec3b8c9048e5ed6ed3f464169003b59a30
+  version: origin/master
 
 - name: dalite
   src: https://github.com/open-craft/ansible-dalite
-  version: '1a3e31c26809893ccc8f9a4100b9c09ae19d6cc3'
+  version: origin/master
 
 - name: load-balancer
   src: https://github.com/open-craft/ansible-load-balancer
-  version: b729113c24d877aae44246ed4888eb73f773bd19
+  version: origin/master
 
 - name: rabbitmq
   src: https://github.com/open-craft/ansible-rabbitmq
-  version: 1f249e94fb8d4b8166496a5e5bc11c2f213cfae4
+  version: origin/master
 
 - name: elasticsearch
   src: https://github.com/open-craft/ansible-role-elasticsearch
-  version: e2ab73d838bba7dd970aab21d89a34089c61cd2a
+  version: origin/master
