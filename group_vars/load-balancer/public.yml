@@ -6,7 +6,7 @@ SANITY_CHECK_LIVE_PORTS:
     port: 443
     message: "Load balancer does not respond on port 443."
 
-TARSNAP_BACKUP_FOLDERS: /etc/letsencrypt
+TARSNAP_BACKUP_FOLDERS: "/etc/letsencrypt /etc/haproxy"
 
 LOAD_BALANCER_OPS_EMAIL: "{{ OPS_EMAIL }}"
 
