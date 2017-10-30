@@ -1,5 +1,5 @@
 - name: Install Python 2
-  hosts: load-balancer:rabbitmq:elasticsearch
+  hosts: load-balancer:rabbitmq:elasticsearch:relay
   become: true
   gather_facts: false
   tasks:
@@ -48,3 +48,10 @@
     - common-server
     - forward-server-mail
     - elasticsearch
+
+- name: Set up internal mail relay
+  hosts: relay
+  become: true
+  roles:
+    - common-server
+    - postfix
