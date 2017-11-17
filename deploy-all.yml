@@ -1,5 +1,5 @@
 - name: Install Python 2
-  hosts: load-balancer:rabbitmq:elasticsearch:relay
+  hosts: load-balancer:rabbitmq:elasticsearch:relay:chat
   become: true
   gather_facts: false
   tasks:
@@ -55,3 +55,11 @@
   roles:
     - common-server
     - postfix
+
+- name: Set up Mattermost chat server
+  hosts: chat
+  become: true
+  roles:
+    - common-server
+    - forward-server-mail
+    - mattermost
