@@ -63,3 +63,5 @@
     - common-server
     - forward-server-mail
     - mattermost
+    - crafty
+    - link-shortener
