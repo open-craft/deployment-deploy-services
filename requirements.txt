@@ -1,2 +1,0 @@
-ansible==2.3.2
-netaddr==0.7.19
